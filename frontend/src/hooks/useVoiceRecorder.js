@@ -17,17 +17,13 @@ function useVoiceRecorder() {
   const [isRecording, setIsRecording] =
     useState(false);
 
-  // User must remain silent for this long
-  // before recording automatically stops.
+  
   const SILENCE_DURATION = 1500;
 
-  // RMS threshold.
-  // We will tune this if necessary.
+ 
   const SILENCE_THRESHOLD = 0.015;
 
-  // =========================================
-  // START RECORDING
-  // =========================================
+
 
   const startRecording = async () => {
     try {
@@ -50,9 +46,7 @@ function useVoiceRecorder() {
       mediaRecorderRef.current =
         mediaRecorder;
 
-      // =====================================
-      // AUDIO DATA
-      // =====================================
+
 
       mediaRecorder.ondataavailable = (
         event
@@ -64,9 +58,7 @@ function useVoiceRecorder() {
         }
       };
 
-      // =====================================
-      // RECORDING START
-      // =====================================
+     
 
       mediaRecorder.onstart = () => {
         console.log(
@@ -76,9 +68,7 @@ function useVoiceRecorder() {
         setIsRecording(true);
       };
 
-      // =====================================
-      // RECORDING STOP
-      // =====================================
+     
 
       mediaRecorder.onstop = async () => {
         console.log(
@@ -87,7 +77,7 @@ function useVoiceRecorder() {
 
         setIsRecording(false);
 
-        // Stop animation frame
+        
         if (
           animationFrameRef.current
         ) {
@@ -99,7 +89,7 @@ function useVoiceRecorder() {
             null;
         }
 
-        // Clear silence timer
+       
         if (
           silenceTimerRef.current
         ) {
@@ -111,9 +101,7 @@ function useVoiceRecorder() {
             null;
         }
 
-        // =================================
-        // CREATE AUDIO BLOB
-        // =================================
+       
 
         const audioBlob =
           new Blob(
@@ -128,7 +116,7 @@ function useVoiceRecorder() {
           audioBlob.size
         );
 
-        // Empty audio protection
+      
         if (audioBlob.size === 0) {
           console.log(
             "⚠️ Empty audio"
@@ -137,9 +125,7 @@ function useVoiceRecorder() {
           return;
         }
 
-        // =================================
-        // BLOB → ARRAY BUFFER
-        // =================================
+     
 
         const arrayBuffer =
           await audioBlob.arrayBuffer();
@@ -153,9 +139,7 @@ function useVoiceRecorder() {
           arrayBuffer
         );
 
-        // =================================
-        // STOP MICROPHONE
-        // =================================
+      
 
         if (streamRef.current) {
           streamRef.current
@@ -171,16 +155,11 @@ function useVoiceRecorder() {
         audioChunksRef.current = [];
       };
 
-      // =====================================
-      // START MEDIA RECORDER
-      // =====================================
+     
 
       mediaRecorder.start();
 
-      // =====================================
-      // START SILENCE DETECTION
-      // =====================================
-
+   
       startSilenceDetection(stream);
 
     } catch (error) {
@@ -193,9 +172,7 @@ function useVoiceRecorder() {
     }
   };
 
-  // =========================================
-  // SILENCE DETECTION
-  // =========================================
+
 
   const startSilenceDetection = (
     stream
@@ -250,11 +227,7 @@ function useVoiceRecorder() {
         dataArray
       );
 
-      // =================================
-      // CALCULATE RMS
-      // =================================
-
-      let sumSquares = 0;
+         let sumSquares = 0;
 
       for (
         let i = 0;
@@ -281,9 +254,6 @@ function useVoiceRecorder() {
         rms.toFixed(4)
       );
 
-      // =================================
-      // USER IS SPEAKING
-      // =================================
 
       if (
         rms > SILENCE_THRESHOLD
@@ -298,9 +268,6 @@ function useVoiceRecorder() {
 
         hasStartedSpeakingRef.current =
           true;
-
-        // User started speaking,
-        // cancel pending silence timer.
 
         if (
           silenceTimerRef.current
@@ -317,10 +284,6 @@ function useVoiceRecorder() {
           );
         }
       }
-
-      // =================================
-      // USER IS SILENT
-      // =================================
 
       else if (
         hasStartedSpeakingRef.current
@@ -352,10 +315,7 @@ function useVoiceRecorder() {
     detectVolume();
   };
 
-  // =========================================
-  // STOP RECORDING
-  // =========================================
-
+  
   const stopRecording = () => {
     const recorder =
       mediaRecorderRef.current;

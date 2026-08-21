@@ -28,19 +28,14 @@ function Home() {
     isRecording,
   } = useVoiceRecorder();
 
-  // =========================================
-  // AUTO SCROLL
-  // =========================================
-
+ 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
     });
   }, [messages]);
 
-  // =========================================
-  // SOCKET EVENTS
-  // =========================================
+  
 
   useEffect(() => {
     const handleConnect = () => {
@@ -276,9 +271,7 @@ function Home() {
     };
   }, [startRecording, screeningCompleted]);
 
-  // =========================================
-  // START CALL
-  // =========================================
+
 
   const startCall = async () => {
     console.log("📞 Starting call...");
@@ -308,9 +301,7 @@ function Home() {
     }
   };
 
-  // =========================================
-  // END CALL
-  // =========================================
+
 
   const endCall = () => {
     console.log("📞 Ending call...");
@@ -325,9 +316,7 @@ function Home() {
     setCallStarted(false);
   };
 
-  // =========================================
-  // DOWNLOAD PDF
-  // =========================================
+  
 
   const downloadPDF = () => {
     if (!pdfData?.pdf) {
@@ -380,9 +369,7 @@ function Home() {
     }
   };
 
-  // =========================================
-  // NEW SCREENING
-  // =========================================
+
 
   const startNewScreening = () => {
     setMessages([]);
@@ -393,9 +380,7 @@ function Home() {
     setIsAiSpeaking(false);
   };
 
-  // =========================================
-  // STATUS TEXT
-  // =========================================
+
 
   const getStatusText = () => {
     if (!callStarted) {
@@ -416,9 +401,7 @@ function Home() {
   return (
     <div className="min-h-screen overflow-hidden bg-[#f7faff] text-slate-900">
 
-      {/* ================================================= */}
-      {/* DECORATIVE BACKGROUND */}
-      {/* ================================================= */}
+     
 
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
 
@@ -431,9 +414,7 @@ function Home() {
       </div>
 
 
-      {/* ================================================= */}
-      {/* NAVBAR */}
-      {/* ================================================= */}
+     
 
       <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/75 backdrop-blur-xl">
 
@@ -501,9 +482,7 @@ function Home() {
       </header>
 
 
-      {/* ================================================= */}
-      {/* LANDING HERO */}
-      {/* ================================================= */}
+   
 
       {!messages.length && !healthReport && (
 
@@ -688,10 +667,6 @@ function Home() {
       )}
 
 
-      {/* ================================================= */}
-      {/* LIVE SCREENING */}
-      {/* ================================================= */}
-
       {callStarted && (
 
         <section className="mx-auto max-w-7xl px-5 py-8 lg:px-8">
@@ -872,10 +847,6 @@ function Home() {
 
       )}
 
-
-      {/* ================================================= */}
-      {/* SCREENING COMPLETE + REPORT */}
-      {/* ================================================= */}
 
       {screeningCompleted && healthReport && (
 
@@ -1120,7 +1091,7 @@ function Home() {
               </div>
 
 
-              {/* ACTIONS */}
+          
 
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center">
 
@@ -1179,9 +1150,7 @@ function Home() {
       )}
 
 
-      {/* ================================================= */}
-      {/* HOW IT WORKS */}
-      {/* ================================================= */}
+    
 
       {!callStarted &&
         !healthReport && (
@@ -1231,9 +1200,6 @@ function Home() {
         )}
 
 
-      {/* ================================================= */}
-      {/* FOOTER */}
-      {/* ================================================= */}
 
       <footer className="border-t border-slate-200 bg-white">
 
@@ -1264,9 +1230,7 @@ function Home() {
 }
 
 
-// =====================================================
-// COMPONENTS
-// =====================================================
+
 
 function VoiceOrb({
   isRecording,
