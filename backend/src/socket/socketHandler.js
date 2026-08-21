@@ -33,9 +33,6 @@ function socketHandler(io) {
     );
 
 
-    // =========================================
-    // CONVERSATION MEMORY
-    // =========================================
 
     let conversation = [
       {
@@ -45,17 +42,12 @@ function socketHandler(io) {
     ];
 
 
-    // =========================================
-    // SCREENING STATUS
-    // =========================================
+
 
     let screeningStatus =
       "idle";
 
 
-    // =========================================
-    // START CALL
-    // =========================================
 
     socket.on(
       "start-call",
@@ -67,13 +59,10 @@ function socketHandler(io) {
         );
 
 
-        // Reset screening
-
         screeningStatus =
           "screening";
 
 
-        // Reset conversation
 
         conversation = [
           {
@@ -84,7 +73,6 @@ function socketHandler(io) {
         ];
 
 
-        // Tell frontend
 
         socket.emit(
           "call-started",
@@ -98,9 +86,6 @@ function socketHandler(io) {
     );
 
 
-    // =========================================
-    // AUDIO RECEIVED
-    // =========================================
 
     socket.on(
       "audio-data",
@@ -113,10 +98,7 @@ function socketHandler(io) {
           );
 
 
-          // =====================================
-          // 1. AUDIO → BUFFER
-          // =====================================
-
+   
           const audioBuffer =
             Buffer.from(audioData);
 
@@ -128,10 +110,7 @@ function socketHandler(io) {
           );
 
 
-          // =====================================
-          // 2. AUDIO → TEXT
-          // =====================================
-
+        
           const text =
             await transcribeAudio(
               audioBuffer
@@ -144,10 +123,7 @@ function socketHandler(io) {
           );
 
 
-          // =====================================
-          // 3. SEND USER TEXT TO FRONTEND
-          // =====================================
-
+     
           socket.emit(
             "transcription",
             {
@@ -156,9 +132,6 @@ function socketHandler(io) {
           );
 
 
-          // =====================================
-          // 4. SAVE USER MESSAGE
-          // =====================================
 
           conversation.push({
             role: "user",
@@ -171,10 +144,7 @@ function socketHandler(io) {
           );
 
 
-          // =====================================
-          // 5. GENERATE AI RESPONSE
-          // =====================================
-
+   
           const aiResponse =
             await generateAIResponse(
               conversation
@@ -187,10 +157,7 @@ function socketHandler(io) {
           );
 
 
-          // =====================================
-          // 6. CHECK SCREENING COMPLETION
-          // =====================================
-
+    
           const isScreeningComplete =
             aiResponse
               .trim()
@@ -199,10 +166,7 @@ function socketHandler(io) {
               );
 
 
-          // =====================================
-          // 7. CLEAN AI RESPONSE
-          // =====================================
-
+    
           let cleanAIResponse =
             aiResponse;
 
@@ -222,9 +186,7 @@ function socketHandler(io) {
           }
 
 
-          // =====================================
-          // 8. SAVE AI MESSAGE
-          // =====================================
+    
 
           conversation.push({
             role: "assistant",
@@ -233,9 +195,7 @@ function socketHandler(io) {
           });
 
 
-          // =====================================
-          // 9. SEND AI TEXT
-          // =====================================
+         
 
           socket.emit(
             "ai-response",
@@ -251,9 +211,7 @@ function socketHandler(io) {
           );
 
 
-          // =====================================
-          // 10. SCREENING COMPLETED
-          // =====================================
+      
 
           if (
             isScreeningComplete
@@ -268,9 +226,7 @@ function socketHandler(io) {
             );
 
 
-            // -----------------------------------
-            // Send completion event
-            // -----------------------------------
+     
 
             socket.emit(
               "screening-completed",
@@ -281,9 +237,7 @@ function socketHandler(io) {
             );
 
 
-            // ===================================
-            // 11. GENERATE HEALTH REPORT
-            // ===================================
+       
 
             try {
 
@@ -303,9 +257,7 @@ function socketHandler(io) {
               );
 
 
-              // ---------------------------------
-              // Send JSON report to frontend
-              // ---------------------------------
+              
 
               socket.emit(
                 "health-report",
@@ -321,9 +273,7 @@ function socketHandler(io) {
               );
 
 
-              // =================================
-              // 12. GENERATE PDF
-              // =================================
+             
 
               try {
 
@@ -364,9 +314,7 @@ function socketHandler(io) {
                 );
 
 
-                // -------------------------------
-                // BUFFER → BASE64
-                // -------------------------------
+              
 
                 const pdfBase64 =
                   pdfBuffer.toString(
@@ -374,9 +322,6 @@ function socketHandler(io) {
                   );
 
 
-                // -------------------------------
-                // SEND PDF TO FRONTEND
-                // -------------------------------
 
                 socket.emit(
                   "health-report-pdf",
@@ -443,10 +388,7 @@ function socketHandler(io) {
           }
 
 
-          // =====================================
-          // 13. AI TEXT → SPEECH
-          // =====================================
-
+          
           console.log(
             "🔊 Generating AI speech..."
           );
@@ -468,10 +410,6 @@ function socketHandler(io) {
             audioBase64.length
           );
 
-
-          // =====================================
-          // 14. SEND AI AUDIO
-          // =====================================
 
           socket.emit(
             "ai-audio",
@@ -513,10 +451,6 @@ function socketHandler(io) {
     );
 
 
-    // =========================================
-    // END CALL
-    // =========================================
-
     socket.on(
       "end-call",
       () => {
@@ -543,10 +477,7 @@ function socketHandler(io) {
     );
 
 
-    // =========================================
-    // DISCONNECT
-    // =========================================
-
+ 
     socket.on(
       "disconnect",
       () => {

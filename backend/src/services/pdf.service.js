@@ -25,10 +25,6 @@ function generateHealthReportPDF(report) {
       });
 
 
-      // =========================================
-      // TITLE
-      // =========================================
-
       doc
         .fontSize(24)
         .font("Helvetica-Bold")
@@ -56,10 +52,7 @@ function generateHealthReportPDF(report) {
       doc.moveDown(1.5);
 
 
-      // =========================================
-      // DISCLAIMER
-      // =========================================
-
+    
       doc
         .fontSize(10)
         .font("Helvetica")
@@ -71,10 +64,7 @@ function generateHealthReportPDF(report) {
       doc.moveDown(1.5);
 
 
-      // =========================================
-      // SECTION HELPER
-      // =========================================
-
+     
       const section = (
         title,
         content
@@ -102,9 +92,7 @@ function generateHealthReportPDF(report) {
       };
 
 
-      // =========================================
-      // BASIC INFORMATION
-      // =========================================
+      
 
       section(
         "Main Concern",
@@ -122,9 +110,7 @@ function generateHealthReportPDF(report) {
       );
 
 
-      // =========================================
-      // SYMPTOMS
-      // =========================================
+     
 
       doc
         .fontSize(14)
@@ -173,9 +159,6 @@ function generateHealthReportPDF(report) {
       doc.moveDown(1);
 
 
-      // =========================================
-      // MEDICAL HISTORY
-      // =========================================
 
       section(
         "Medical History",
@@ -183,9 +166,7 @@ function generateHealthReportPDF(report) {
       );
 
 
-      // =========================================
-      // MEDICATIONS
-      // =========================================
+    
 
       section(
         "Current Medications",
@@ -193,9 +174,7 @@ function generateHealthReportPDF(report) {
       );
 
 
-      // =========================================
-      // RISK FACTORS
-      // =========================================
+
 
       section(
         "Risk Factors",
@@ -203,10 +182,7 @@ function generateHealthReportPDF(report) {
       );
 
 
-      // =========================================
-      // RED FLAGS
-      // =========================================
-
+  
       doc
         .fontSize(14)
         .font("Helvetica-Bold")
@@ -254,9 +230,6 @@ function generateHealthReportPDF(report) {
       doc.moveDown(1);
 
 
-      // =========================================
-      // CONVERSATION SUMMARY
-      // =========================================
 
       section(
         "Conversation Summary",
@@ -264,9 +237,7 @@ function generateHealthReportPDF(report) {
       );
 
 
-      // =========================================
-      // GENERAL NEXT STEPS
-      // =========================================
+  
 
       section(
         "General Next Steps",
@@ -274,9 +245,7 @@ function generateHealthReportPDF(report) {
       );
 
 
-      // =========================================
-      // FINAL DISCLAIMER
-      // =========================================
+
 
       doc.moveDown(1);
 
@@ -292,9 +261,7 @@ function generateHealthReportPDF(report) {
         );
 
 
-      // =========================================
-      // FINISH PDF
-      // =========================================
+
 
       doc.end();
 
@@ -307,9 +274,7 @@ function generateHealthReportPDF(report) {
 }
 
 
-// =========================================
-// EXPORT
-// =========================================
+
 
 module.exports = {
   generateHealthReportPDF,

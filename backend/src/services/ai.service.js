@@ -1,9 +1,6 @@
 const axios = require("axios");
 
 
-// ============================================
-// NORMAL AI CONVERSATION
-// ============================================
 
 const generateAIResponse = async (messages) => {
 
@@ -26,7 +23,7 @@ const generateAIResponse = async (messages) => {
 
         temperature: 0.4,
 
-        // Short responses for voice conversation
+      
         max_tokens: 200,
       },
       {
@@ -66,9 +63,6 @@ const generateAIResponse = async (messages) => {
 };
 
 
-// ============================================
-// HEALTH REPORT GENERATION
-// ============================================
 
 const generateAIReport = async (messages) => {
 
@@ -91,7 +85,7 @@ const generateAIReport = async (messages) => {
 
         temperature: 0.2,
 
-        // More tokens for complete JSON report
+      
         max_tokens: 800,
       },
       {
